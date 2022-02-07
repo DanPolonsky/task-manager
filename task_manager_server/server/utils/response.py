@@ -1,9 +1,13 @@
-
 class Response:
-    success: bool
-    data: str|dict 
+    """ This class represents a response from the server.
 
-    def __new__(self, success, status_code, data=None):
+    Returns:
+        [type]: [description]
+    """
+    success: bool
+    data: dict 
+
+    def __new__(self, success, status_code, data=None) -> tuple:
         response_body = {"success": success}
         
         if data:
