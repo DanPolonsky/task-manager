@@ -7,6 +7,14 @@ import hashlib
 """
 
 
+### Utils functions
+
+def hash_password(password: str):
+    m = hashlib.sha256()
+    m.update(password.encode())
+    return m.hexdigest()
+
+
 ### User functions
 
 def check_if_username_exists(username: str) -> bool:
@@ -39,6 +47,17 @@ def check_if_email_exists(email: str) -> bool:
         return False
 
 
+def get_user_by_email(email: str) -> User:
+    """ Function gets a user from the database using email.
+
+    Args:
+        email (str): The user's email.
+
+    Returns:
+        [User]: The user object.
+    """
+    return User.query.filter_by(email=email).first()
+
 
 def create_user(email: str, username: str, password: str) -> None:
     """ Function creates a new user in database with the provided data.
@@ -48,9 +67,8 @@ def create_user(email: str, username: str, password: str) -> None:
         username (str): The user's username.
         password (str): The user's plane password.
     """
-    m = hashlib.sha256()
-    m.update(password.encode())
-    hashed_password = m.hexdigest()
+    
+    hashed_password = hash_password(password)
     
     db.session.add(User(
         email=email,
