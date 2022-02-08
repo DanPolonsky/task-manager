@@ -24,7 +24,7 @@ def signup_handler(request) -> Response:
 
   
     if "email" not in data or "username" not in data or "password" not in data:
-        return Response(success=False, data="missing email or password keys.", status_code=400)
+        return Response(success=False, data="missing email and/or password and/or username keys.", status_code=400)
     
     if not isinstance(data["email"], str) or not isinstance(data["password"], str) or not isinstance(data["username"], str):
         return Response(success=False, data="email, username or password types are not string.", status_code=400)
@@ -41,6 +41,7 @@ def signup_handler(request) -> Response:
     
     if UserQueries.user_exists_by_username(data["username"]):
         return Response(success=False, data="username already exists.", status_code=200)
+    
     
     UserQueries.create_user(data["email"], data["username"], data["password"])
     

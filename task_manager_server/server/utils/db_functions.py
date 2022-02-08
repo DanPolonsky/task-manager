@@ -80,3 +80,4 @@ class UserQueries:
         ))
 
         db.session.commit()
+        
