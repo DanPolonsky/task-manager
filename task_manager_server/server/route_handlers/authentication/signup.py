@@ -1,6 +1,5 @@
 from server.utils.response import Response
-from server.utils import db_functions
-
+from server.utils.db_functions import UserQueries
 import re
 
 
@@ -37,12 +36,12 @@ def signup_handler(request) -> Response:
     if len(data["password"]) < 6:
         return Response(success=False, data="password length must be above 6 characters.", status_code=400)
     
-    if db_functions.check_if_email_exists(data["email"]):
+    if UserQueries.user_exists_by_email(data["email"]):
         return Response(success=False, data="email already exists.", status_code=200)
     
-    if db_functions.check_if_username_exists(data["username"]):
+    if UserQueries.user_exists_by_username(data["username"]):
         return Response(success=False, data="username already exists.", status_code=200)
     
-    db_functions.create_user(data["email"], data["username"], data["password"])
+    UserQueries.create_user(data["email"], data["username"], data["password"])
     
     return Response(success=True, status_code=200)

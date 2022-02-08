@@ -1,5 +1,6 @@
 from server.utils.response import Response
-from server.utils import db_functions
+from server.utils.db_functions import UserQueries
+from server.utils.utils import hash_password
 
 
 def login_handler(request) -> Response:
@@ -26,12 +27,12 @@ def login_handler(request) -> Response:
     if not isinstance(data["email"], str) or not isinstance(data["password"], str):
         return Response(success=False, data="email or password type are not a string.", status_code=400)
     
-    if not db_functions.check_if_email_exists(data["email"]):
+    if not UserQueries.user_exists_by_email(data["email"]):
         return Response(success=False, data="email doesnt exist.", status_code=401)
     
-    db_user = db_functions.get_user_by_email(data["email"])
+    db_user = UserQueries.get_user(data["email"])
 
-    if db_functions.hash_password(data["password"]) != db_user.password:
+    if hash_password(data["password"]) != db_user.password:
         return Response(success=False, data="email or password are incorrect.", status_code=401)
 
 
