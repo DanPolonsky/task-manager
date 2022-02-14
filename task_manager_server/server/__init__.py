@@ -13,6 +13,3 @@ import server.models
 
 if not db.engine.table_names():
     db.create_all()
-
-
-
