@@ -10,59 +10,6 @@ class UserQueries:
     """
         A static class containing db user functions.
     """
-    def user_exists_by_email(email: str) -> bool:
-        """ Function checks if user with the provided email exists in database.
-
-        Args:
-            email (str): A username to check if exists.
-
-        Returns:
-            [bool]: Returns whether email exists in database.
-        """
-        
-    
-        if User.query.filter(User.email == email).first():
-            return True
-        
-        else:
-            return False
-
-
-    def user_exists_by_username(username: str) -> bool:
-        """ Function checks if user with the provided username exists in database.
-
-        Args:
-            username (str): A username to check if exists.
-
-        Returns:
-            [bool]: Returns whether username exists in database.
-        """
-        
-    
-        if User.query.filter(User.username == username).first():
-            return True
-        
-        else:
-            return False
-
-
-    def user_exists_by_id(id: str) -> bool:
-        """ Function checks if user with the provided id exists in database.
-
-        Args:
-            id (str): A user id to check if exists.
-
-        Returns:
-            [bool]: Returns whether id exists in database.
-        """
-        
-    
-        if User.query.filter(User.id == id).first():
-            return True
-        
-        else:
-            return False
-
 
     def get_user_by_email(email: str) -> User:
         """ Function gets a user from the database using email.
@@ -74,6 +21,18 @@ class UserQueries:
             [User]: The user object.
         """
         return User.query.filter(User.email == email).first()
+
+    
+    def get_user_by_username(username: str) -> User:
+        """ Function gets a user from the database using username.
+
+        Args:
+            username (str): The user's username.
+
+        Returns:
+            [User]: The user object.
+        """
+        return User.query.filter(User.username == username).first()
 
 
     def get_user_by_id(id: str) -> User:
@@ -155,42 +114,6 @@ class UserQueries:
 class ProjectQueries:
     """ A static class containing db project functions. """
    
-    def project_exists_by_id(id: int) -> bool:
-        """ Function checks if project with the provided id exists in database.
-
-        Args:
-            id (int): A project id to check if exists.
-
-        Returns:
-            [bool]: Returns whether id exists in database.
-        """
-        
-    
-        if Project.query.filter(Project.id == id).first():
-            return True
-        
-        else:
-            return False
-
-
-    def project_exists_by_name(name: str) -> bool:
-        """ Function checks if project with the provided name exists in database.
-
-        Args:
-            name (str): A project name to check if exists.
-
-        Returns:
-            [bool]: Returns whether name exists in database.
-        """
-        
-    
-        if Project.query.filter(Project.name == name).first():
-            return True
-        
-        else:
-            return False
-
-
     def get_project_by_id(id: int) -> Project:
         """ Function gets a project from the database using id.
 

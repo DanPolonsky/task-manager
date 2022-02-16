@@ -1,10 +1,17 @@
 from flask import request
 
 from server import app
-from server.route_handlers.users.authentication import login_handler, register_handler
+from server.route_handlers.authentication.authentication import login_handler, register_handler
 from server.route_handlers.users.projects import project_creation_handler
 
 
+### Temporary
+from server.utils.db_functions import UserQueries
+@app.after_request
+def after_request(response):
+    print(UserQueries.get_user_by_id(1))
+    return response
+####
 
 @app.route('/auth/login', methods = ['POST'])
 def login():

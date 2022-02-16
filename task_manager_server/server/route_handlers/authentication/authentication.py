@@ -30,10 +30,11 @@ def login_handler(request) -> Response:
     if not isinstance(data["email"], str) or not isinstance(data["password"], str):
         return Response(success=False, data="email(string) and/or password(string) types are not correct.", status_code=400)
     
-    if not UserQueries.user_exists_by_email(data["email"]):
+    db_user = UserQueries.get_user_by_email(data["email"])
+
+    if db_user:
         return Response(success=False, data="email doesnt exist.", status_code=401)
     
-    db_user = UserQueries.get_user(data["email"])
 
     if hash_password(data["password"]) != db_user.password:
         return Response(success=False, data="email or password are incorrect.", status_code=401)
@@ -75,10 +76,10 @@ def register_handler(request) -> Response:
     if len(data["password"]) < 6:
         return Response(success=False, data="password length must be above 6 characters.", status_code=400)
     
-    if UserQueries.user_exists_by_email(data["email"]):
+    if UserQueries.get_user_by_email(data["email"]):
         return Response(success=False, data="email already exists.", status_code=200)
     
-    if UserQueries.user_exists_by_username(data["username"]):
+    if UserQueries.get_user_by_username(data["username"]):
         return Response(success=False, data="username already exists.", status_code=200)
     
     

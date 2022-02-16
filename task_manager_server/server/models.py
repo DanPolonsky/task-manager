@@ -20,8 +20,6 @@ class UserProjectAssociation(db.Model):
     
     user_permission = db.Column(db.Enum(UserPermissions), nullable=False)
 
-    def __repr__(self):
-        return f"Association <'user: '{self.user}', project: '{self.project}', user-permission: '{self.user_permission}'>"
 
 
 class User(db.Model):
@@ -34,8 +32,11 @@ class User(db.Model):
     
     associations = db.relationship("UserProjectAssociation", back_populates="user")
 
+    tasks = db.relationship("Task")
+    
     def __repr__(self):
-        return f"User <'email: '{self.email}', username: '{self.username}', password: {self.password}, projects: '{self.associations}>'"
+        projects = [asscociation.project.name for asscociation in self.associations]
+        return f"<User: email-'{self.email}', username-'{self.username}', password-'{self.password}', projects-'{projects}, tasks-'{self.tasks}'>"
 
 
 class Project(db.Model):
@@ -50,7 +51,8 @@ class Project(db.Model):
     tasks = db.relationship('Task', lazy=True)
     
     def __repr__(self):
-        return f"Project <name: '{self.name}', tasks: , users: '{self.associations}>"
+        users = [asscociation.user.name for asscociation in self.associations]
+        return f"<Project: name-'{self.name}', tasks-'{self.tasks}', users-'{users}>"
 
 
 
@@ -65,10 +67,10 @@ class Task(db.Model):
     due_date = db.Column(db.DateTime, default=None, nullable=False)
     
     assignee_id = db.Column(db.ForeignKey('users.id'), primary_key=True)
-    assignee = db.relationship('User', uselist=False)
+    assignee = db.relationship('User', uselist=False, back_populates="tasks")
 
     def __repr__(self):
-        return f"Task <name: '{self.name}', description: {self.description}, due_date: {self.due_date}>, assignee: '{self.assignee}'"
+        return f"<Task: name-'{self.name}', description-'{self.description}', due_date-'{self.due_date}'>, assignee-'{self.assignee.name}'"
     
 
 
