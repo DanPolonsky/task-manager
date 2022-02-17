@@ -9,7 +9,7 @@ def project_creation_handler(request) -> Response:
         request (flask.request): The request object.
 
     Returns:
-        [Response]: A reponse object.
+        Response: A reponse object.
     """
     
     try:

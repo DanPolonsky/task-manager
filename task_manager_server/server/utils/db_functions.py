@@ -18,7 +18,7 @@ class UserQueries:
             email (str): The user's email.
 
         Returns:
-            [User]: The user object.
+            User: The user object.
         """
         return User.query.filter(User.email == email).first()
 
@@ -30,7 +30,7 @@ class UserQueries:
             username (str): The user's username.
 
         Returns:
-            [User]: The user object.
+            User: The user object.
         """
         return User.query.filter(User.username == username).first()
 
@@ -42,7 +42,7 @@ class UserQueries:
             id (str): The user's id.
 
         Returns:
-            [User]: The user object.
+            User: The user object.
         """
         return User.query.filter(User.id == id).first()
 
@@ -102,7 +102,7 @@ class UserQueries:
             user_id (int): The user's id.
 
         Returns:
-            [list]: The list of project objects.
+            list: The list of project objects.
         """
         user = UserQueries.get_user_by_id(user_id)
         
@@ -121,7 +121,7 @@ class ProjectQueries:
             id (int): The project's id.
 
         Returns:
-            [Project]: The project object.
+            Project: The project object.
         """
         return Project.query.filter(Project.id == id).first()
 
@@ -133,7 +133,7 @@ class ProjectQueries:
             name (str): The project's name.
 
         Returns:
-            [Project]: The project object.
+            Project: The project object.
         """
         return Project.query.filter(Project.name == name).first()
 

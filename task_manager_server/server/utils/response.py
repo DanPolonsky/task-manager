@@ -1,8 +1,6 @@
 class Response:
     """ This class represents a response from the server.
 
-    Returns:
-        [type]: [description]
     """
     success: bool
     data: dict 

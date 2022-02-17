@@ -1,12 +1,15 @@
 import jwt
-from server import app
 
-"""
-    This module contains a list of jwt functions used by the server.
-"""
+from server import app
+from server.models import User
 
 
 class JwtHandler:
-
-    def create_token(user_email: str):
-        pass
+    """
+        This static class handles jwt functionallity.
+    """
+    def create_token(user: User) -> str:
+        payload = {
+            "userId": user.id,
+        }
+        wt_token = jwt.encode({"some": "payload"}, "secret", algorithm="HS256")

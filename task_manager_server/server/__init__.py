@@ -17,5 +17,4 @@ if app.config["TESTING"]:
     db.drop_all()
 
 
-if not db.engine.table_names():
-    db.create_all()
+db.create_all()
