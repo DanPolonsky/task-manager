@@ -1,5 +1,5 @@
 import pytest
-from tests.properties import user, project
+from tests.properties import user
 import logging
 """
     This module contains positive user api functions tests.
