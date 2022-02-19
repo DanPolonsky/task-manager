@@ -45,13 +45,17 @@ class UserQueries:
         return User.query.filter(User.id == id).first()
 
 
-    def create_user(email: str, username: str, password: str) -> None:
+    def create_user(email: str, username: str, password: str) -> User:
         """ Function creates a new user in database with the provided data.
 
         Args:
             email (str): The user's email.
             username (str): The user's username.
             password (str): The user's plane password.
+        
+        Returns:
+            User: The created user.
+
         """
 
         hashed_password = hash_password(password)
@@ -64,9 +68,11 @@ class UserQueries:
 
         db.session.add(user)
         db.session.commit()
+        
+        return user
 
     
-    def create_project(user_id: int, project_name: str) -> None:
+    def create_project(user_id: int, project_name: str) -> Project:
 
         """ Function creates a new project in database for the provided user.
 
@@ -92,6 +98,7 @@ class UserQueries:
         db.session.add(user)
         db.session.commit()
 
+        return project
 
     def get_user_projects(user_id: int) -> list:
         """ Function gets a list of projects for the provided user.

@@ -10,7 +10,7 @@ def hash_password(password: str) -> str:
         password (str): A plain text password.
 
     Returns:
-        [str]: The hashed password.
+        str: The hashed password.
     """
     m = hashlib.sha256()
     m.update(password.encode())

@@ -1,11 +1,9 @@
 import datetime
 import jwt
+
 from server import app
-
-"""
-    This module contains a list of jwt functions used by the server.
-"""
-
+from server.models import User
+from server.properties import jwt_properties
 
 class JwtHandler:
 
@@ -19,8 +17,8 @@ class JwtHandler:
             str: The jwt token.
         """
         payload = {
-            "user_id": user_id,
-            "exp": datetime.datetime.now() + datetime.timedelta(hours=1)
+            jwt_properties.payload_keys.user_id: user_id,
+            jwt_properties.payload_keys.exp: datetime.datetime.now() + datetime.timedelta(jwt_properties.experation_time)
         }
         
         jwt_token = jwt.encode(payload, app.config["SECRET_KEY"], algorithm=app.config["JWT_ALG"])
@@ -36,5 +34,5 @@ class JwtHandler:
         Returns:
             int: The user's id.
         """
-        payload = jwt.decode(token, app.config["SECRET_KEY"], algorithm=app.config["JWT_ALG"])
-        return payload["user_id"]
+        payload = jwt.decode(token, app.config["SECRET_KEY"], algorithms=[app.config["JWT_ALG"]])
+        return payload[jwt_properties.payload_keys.user_id]

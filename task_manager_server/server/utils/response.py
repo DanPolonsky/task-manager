@@ -2,6 +2,7 @@ class Response:
     """ This class represents a response from the server.
     """
     success: bool
+    status_code: int
     data: dict 
 
     def __new__(self, success, status_code, data=None) -> tuple:

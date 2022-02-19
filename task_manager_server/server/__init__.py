@@ -4,7 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config.from_object(os.environ["CONFIG"])
+
+config = os.environ.get("CONFIG") 
+if config:
+    app.config.from_object(config)
+else:
+    app.config.from_object("config.Testing")
 
 db = SQLAlchemy(app)
 
@@ -17,5 +22,4 @@ if app.config["TESTING"]:
     db.drop_all()
 
 
-if not db.engine.table_names():
-    db.create_all()
+db.create_all()
