@@ -23,8 +23,18 @@ def test_user_creation(client: FlaskClient):
     }
 
 
-# def test_project_creation(client: FlaskClient):
-#     logging.info(f"Creating project: {project}")
-#     response = client.post("/users/project", headers=shared_values.headers, json=project)
-#     print_response(response)
-#     assert response_is_valid(response)
+def test_project_creation(client: FlaskClient):
+    logging.info(f"Creating project: {project}")
+    response = client.post("/user/projects", headers=shared_values.headers, json=project)
+    print_response(response)
+    assert response_is_valid(response)
+    shared_values.project_id = response.json[response_properties.payload_keys.data][response_properties.payload_keys.project_id]
+
+
+def test_project_deletion(client: FlaskClient):
+    logging.info(f"Creating project: {project}")
+    response = client.delete("/user/projects", headers=shared_values.headers, json={
+        request_properties.payload_keys.project_id: shared_values.project_id
+    })
+    print_response(response)
+    assert response_is_valid(response)

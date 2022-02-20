@@ -15,7 +15,7 @@ user = {
 
 project = {
     "name": "project-name",
-    "description": "des",
+    "description": "some-description",
 }
 
 

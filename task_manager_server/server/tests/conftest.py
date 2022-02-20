@@ -13,3 +13,4 @@ def client() -> FlaskClient:
 
 class shared_values:
     headers = None
+    project_id = None
