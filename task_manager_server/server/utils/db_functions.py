@@ -72,7 +72,7 @@ class UserQueries:
         return user
 
     
-    def create_project(user_id: int, project_name: str) -> Project:
+    def create_project(user: User, project_name: str, description: str) -> Project:
 
         """ Function creates a new project in database for the provided user.
 
@@ -80,12 +80,10 @@ class UserQueries:
             user_id (int): The user's id.
             project_name (str): The project's name.
         """
-        
-        user = UserQueries.get_user_by_id(user_id)
-
-        
+                
         project = Project(
             name=project_name,
+            description=description
         )
 
         association = UserProjectAssociation(
@@ -100,21 +98,37 @@ class UserQueries:
 
         return project
 
-    def get_user_projects(user_id: int) -> list:
+    def get_user_projects(user: User) -> list:
         """ Function gets a list of projects for the provided user.
 
         Args:
-            user_id (int): The user's id.
+            user_id (User): The user.
 
         Returns:
             list: The list of project objects.
         """
-        user = UserQueries.get_user_by_id(user_id)
         
         user_associations = user.associations
         return [association.project for association in user_associations]
-        
-        
+    
+
+    def get_user_project_permission(user: User, project: Project) -> UserPermissions:
+        """ Function gets the user's project permission.
+
+        Args:
+            user_id (User): The user.
+            project_id (Project): The project.
+
+        Returns:
+            UserPermissions: The user's project permission.
+        """
+    
+        user_associations = user.associations
+        for association in user_associations:
+            if association.project.id == project.id:
+                return association.user_permission
+
+
 
 class ProjectQueries:
     """ A static class containing db project functions. """
@@ -143,5 +157,11 @@ class ProjectQueries:
         return Project.query.filter(Project.name == name).first()
 
 
+    def delete_project(project: Project):
+        """ Function deletes a project.
 
-    
+        Args:
+            project_id (int): The project's id.
+        """
+        db.session.delete(project)
+        db.session.commit()

@@ -12,9 +12,10 @@ user = {
 }
 
 
+
 project = {
     "name": "project-name",
-    "description": "This is a project's description",
+    "description": "des",
 }
 
 

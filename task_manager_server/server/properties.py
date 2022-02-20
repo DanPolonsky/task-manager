@@ -6,6 +6,7 @@ class request_properties:
         password = "password"
         name = "name"
         description = "description"
+        project_id = "project_id"
     
     class header_keys:
         authrorization = "Authorization"

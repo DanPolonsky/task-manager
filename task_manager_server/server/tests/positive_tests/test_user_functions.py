@@ -23,8 +23,8 @@ def test_user_creation(client: FlaskClient):
     }
 
 
-def test_project_creation(client: FlaskClient):
-    logging.info(f"Creating project: {project}")
-    response = client.post("/users/project", headers=shared_values.headers, json=project)
-    print_response(response)
-    assert response_is_valid(response)
+# def test_project_creation(client: FlaskClient):
+#     logging.info(f"Creating project: {project}")
+#     response = client.post("/users/project", headers=shared_values.headers, json=project)
+#     print_response(response)
+#     assert response_is_valid(response)
