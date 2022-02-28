@@ -27,14 +27,41 @@ def test_project_creation(client: FlaskClient):
     logging.info(f"Creating project: {project}")
     response = client.post("/user/projects", headers=shared_values.headers, json=project)
     print_response(response)
-    assert response_is_valid(response)
+    assert response_is_valid(response)  
+
     shared_values.project_id = response.json[response_properties.payload_keys.data][response_properties.payload_keys.project_id]
+
+    response = client.get("/user/projects", headers=shared_values.headers)
+    print_response(response)
+    for project_info in response.json[response_properties.payload_keys.data][response_properties.payload_keys.projects]:
+        if project_info["id"] == shared_values.project_id:
+            assert True
+    
+    assert False
 
 
 def test_project_deletion(client: FlaskClient):
-    logging.info(f"Creating project: {project}")
+    logging.info(f"Deleting project: {project}")
     response = client.delete("/user/projects", headers=shared_values.headers, json={
         request_properties.payload_keys.project_id: shared_values.project_id
     })
     print_response(response)
     assert response_is_valid(response)
+    
+    response = client.get("/user/projects", headers=shared_values.headers)
+    print_response(response)
+    for project_info in response.json[response_properties.payload_keys.data][response_properties.payload_keys.projects]:
+        if project_info["id"] == shared_values.project_id:
+            assert False
+    
+    assert True
+
+
+def test_user_deletion(client: FlaskClient):
+    logging.info(f"Deleting user: {user}")
+    response = client.delete("/users", headers=shared_values.headers)
+    
+    print_response(response)
+    assert response_is_valid(response)
+    
+

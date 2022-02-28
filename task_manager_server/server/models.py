@@ -32,7 +32,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(64), unique=False, nullable=False)
     
-    associations = db.relationship("UserProjectAssociation", back_populates="user")
+    associations = db.relationship("UserProjectAssociation", back_populates="user", cascade="all, delete")
 
     tasks = db.relationship("Task")
     

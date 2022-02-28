@@ -37,7 +37,7 @@ class UserQueries:
         """ Function gets a user from the database using id.
 
         Args:
-            id (str): The user's id.
+            id (str): The user.
 
         Returns:
             User: The user object.
@@ -71,13 +71,22 @@ class UserQueries:
         
         return user
 
+    def delete_user(user: User):
+        """ Function deletes a user.
+
+        Args:
+            user (User): The user to delete.
+        """
+        db.session.delete(user)
+        db.session.commit()
+
     
     def create_project(user: User, project_name: str, description: str) -> Project:
 
         """ Function creates a new project in database for the provided user.
 
         Args:
-            user_id (int): The user's id.
+            user (int): The user.
             project_name (str): The project's name.
         """
                 
@@ -102,7 +111,7 @@ class UserQueries:
         """ Function gets a list of projects for the provided user.
 
         Args:
-            user_id (User): The user.
+            user (User): The user.
 
         Returns:
             list: The list of project objects.
@@ -116,8 +125,8 @@ class UserQueries:
         """ Function gets the user's project permission.
 
         Args:
-            user_id (User): The user.
-            project_id (Project): The project.
+            user (User): The user.
+            project (Project): The project.
 
         Returns:
             UserPermissions: The user's project permission.
@@ -161,7 +170,7 @@ class ProjectQueries:
         """ Function deletes a project.
 
         Args:
-            project_id (int): The project's id.
+            project (int): The project's id.
         """
         db.session.delete(project)
         db.session.commit()

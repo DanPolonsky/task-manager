@@ -83,8 +83,9 @@ def token_required(f):
         except Exception as e:
             return Response(success=False, data=f"Error decoding jwt token: {str(e)}.", status_code=401)
 
-        if not UserQueries.get_user_by_id(user_id):
+        user = UserQueries.get_user_by_id(user_id)
+        if not user:
             return Response(success=False, data=f"Jwt token user doesnt exist anymore.", status_code=401)
 
-        return f(user_id, *args, **kwargs)
+        return f(user, *args, **kwargs)
     return decorator
