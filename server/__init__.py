@@ -6,10 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 config = os.environ.get("CONFIG") 
-if config:
-    app.config.from_object(config)
-else:
-    app.config.from_object("config.Testing")
+
+app.config.from_object(config)
+
 
 db = SQLAlchemy(app)
 
