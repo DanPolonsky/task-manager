@@ -63,4 +63,6 @@ def test_user_deletion(client: FlaskClient):
     print_response(response)
     assert response_is_valid(response)
     
+def test_false():
+    assert False
 
