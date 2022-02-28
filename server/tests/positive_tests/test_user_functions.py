@@ -1,4 +1,3 @@
-import pytest
 import logging
 from flask.testing import FlaskClient
 from server.tests.properties import user, project
@@ -9,7 +8,6 @@ from server.tests.conftest import shared_values
 """
     This module contains positive user api functions tests.
 """
-
 
 
 def test_user_creation(client: FlaskClient):
@@ -30,12 +28,13 @@ def test_project_creation(client: FlaskClient):
     assert response_is_valid(response)  
 
     shared_values.project_id = response.json[response_properties.payload_keys.data][response_properties.payload_keys.project_id]
-
+    logging.info(f"Checking if project got created: {project}")
     response = client.get("/user/projects", headers=shared_values.headers)
     print_response(response)
     for project_info in response.json[response_properties.payload_keys.data][response_properties.payload_keys.projects]:
         if project_info["id"] == shared_values.project_id:
             assert True
+            return
     
     assert False
 
@@ -47,7 +46,7 @@ def test_project_deletion(client: FlaskClient):
     })
     print_response(response)
     assert response_is_valid(response)
-    
+    logging.info(f"Checking if project got deleted: {project}")
     response = client.get("/user/projects", headers=shared_values.headers)
     print_response(response)
     for project_info in response.json[response_properties.payload_keys.data][response_properties.payload_keys.projects]:

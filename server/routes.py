@@ -9,18 +9,6 @@ from server.route_handlers.users.users import user_deletion_handler
 from server.route_handlers.users.projects import project_list_handler
 
 
-### FOR DEBUGGING
-@app.after_request
-def after_request_func(response):
-    from server.models import User, UserProjectAssociation, Project
-    print(User.query.all())
-    print(UserProjectAssociation.query.all())
-    print(Project.query.all())
-
-    return response
-
-
-
 @app.route("/auth/login", methods = ["POST"])
 def login():
     return login_handler(request)
